@@ -25,12 +25,17 @@ const openai = new OpenAI ({
 
 app.post('/chatbot', async (req, res) => {
     try {
-        const userMessage = req.body; // get user message
-        console.log("user: " + userMessage);
+        const conversationHistory = req.body.messages; // gets conversation history
+        console.log(conversationHistory); // displays the conversation history server side
+        console.log("User: " + conversationHistory[conversationHistory.length - 1].content); // displays the most recent message server side
+
+        // conversation with NO history
+        //const userMessage = req.body; // get user message
+        //console.log("user: " + userMessage);
 
         const response = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
-            messages: [userMessage], // will need to include coversation histroy soon
+            messages: conversationHistory, // will need to include coversation histroy soon
             temperature: 0.9, // control randomness of responses
         });
 
