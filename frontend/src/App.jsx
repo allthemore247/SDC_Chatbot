@@ -76,7 +76,7 @@ function App() {
 				{messages}
 			</div>
 		  	<div id="prompt">
-				<input id="messageInput" contentEditable></input>
+				<input id="messageInput" autoComplete='off'></input>
 				<button id="submit" onClick={handleSubmit}></button>    
 		  	</div>
 		</>
