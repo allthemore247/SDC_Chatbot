@@ -15,7 +15,7 @@ function App() {
 		let currentHistory = conversationHistory; // this allows for a current history in the function due to useStates not immediately updating
     	const messageInput = document.getElementById('messageInput')
 		
-		if (!messageInput) return
+		if (messageInput.value === '') return
 
 		const userMessage = messageInput.value
 
@@ -68,6 +68,28 @@ function App() {
 		)
 
 	}, [conversationHistory]); // dependency list, on update function is run
+
+	useEffect(() => { // put eventListeners in useEffects
+		const handleKeyDown = (e) => {
+			if (e.key === 'Enter') {
+				if (e.shiftKey) return
+				if (messageInput.value === '') return
+				e.preventDefault()
+				handleSubmit()
+			}
+		}
+
+		const messageInput = document.getElementById('messageInput')
+		if (messageInput) {
+			messageInput.addEventListener('keydown', handleKeyDown)
+		}
+
+		return () => {
+			if (messageInput) {
+				messageInput.removeEventListener('keydown', handleKeyDown)
+			}
+		}
+	});
 
 	return (
 		// returns array of jsx elements (messages in a div and input + button in a div)
